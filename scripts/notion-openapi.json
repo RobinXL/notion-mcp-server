@@ -31,7 +31,7 @@
   "paths": {
     "/v1/users/{user_id}": {
       "get": {
-        "summary": "Retrieve a user",
+        "summary": "Retrieve a user by their ID. This tool requires Notion Enterprise plan and Organization API key with correct permissions.",
         "description": "",
         "operationId": "get-user",
         "parameters": [
@@ -81,13 +81,13 @@
     },
     "/v1/users": {
       "get": {
-        "summary": "List all users",
+        "summary": "List all users in Notion workspace. This tool requires Notion Enterprise plan and Organization API key with correct permissions.",
         "operationId": "get-users",
         "parameters": [
           {
             "name": "start_cursor",
             "in": "query",
-            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.",
+            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results. Must be a valid UUID. If not know, skip and DO NOT include it.",
             "schema": {
               "type": "string"
             }
@@ -125,7 +125,7 @@
     },
     "/v1/users/me": {
       "get": {
-        "summary": "Retrieve your token's bot user",
+        "summary": "Retrieve yourself as a user with the current setup token in Notion",
         "description": "",
         "operationId": "get-self",
         "parameters": [],
@@ -800,19 +800,13 @@
                     "description": "When supplied, orders the results based on the provided [sort criteria](ref:post-database-query-sort).",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "property",
-                        "direction"
-                      ],
+                      "required": ["property", "direction"],
                       "properties": {
                         "property": {
                           "type": "string"
                         },
                         "direction": {
-                          "enum": [
-                            "ascending",
-                            "descending"
-                          ],
+                          "enum": ["ascending", "descending"],
                           "type": "string"
                         }
                       }
@@ -820,7 +814,7 @@
                   },
                   "start_cursor": {
                     "type": "string",
-                    "description": "When supplied, returns a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results."
+                    "description": "When supplied, returns a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results. Must be a valid UUID. If not know, skip and DO NOT include it."
                   },
                   "page_size": {
                     "type": "integer",
@@ -889,7 +883,7 @@
                   },
                   "start_cursor": {
                     "type": "string",
-                    "description": "A `cursor` value returned in a previous response that If supplied, limits the response to results starting after the `cursor`. If not supplied, then the first page of results is returned. Refer to [pagination](https://developers.notion.com/reference/intro#pagination) for more details."
+                    "description": "A `cursor` value returned in a previous response that If supplied, limits the response to results starting after the `cursor`. Must be a valid UUID. If not know, skip and DO NOT include it."
                   },
                   "page_size": {
                     "type": "integer",
@@ -925,7 +919,7 @@
           {
             "name": "start_cursor",
             "in": "query",
-            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.",
+            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results. Must be a valid UUID. If not know, skip and DO NOT include it.",
             "schema": {
               "type": "string"
             }
@@ -946,7 +940,7 @@
         "security": []
       },
       "patch": {
-        "summary": "Append block children",
+        "summary": "Append new children blocks to a specified parent block in Notion. For insert or write content to a block or a page. You can optionally specify the 'after' parameter to append after a certain block.",
         "description": "",
         "operationId": "patch-block-children",
         "parameters": [
@@ -965,9 +959,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "children"
-                ],
+                "required": ["children"],
                 "properties": {
                   "children": {
                     "type": "array",
@@ -989,44 +981,31 @@
                                         "type": "string"
                                       },
                                       "link": {
-                                        "type": [
-                                          "object",
-                                          "null"
-                                        ],
+                                        "type": ["object", "null"],
                                         "properties": {
                                           "url": {
                                             "type": "string"
                                           }
                                         },
-                                        "required": [
-                                          "url"
-                                        ]
+                                        "required": ["url"]
                                       }
                                     },
                                     "additionalProperties": false,
-                                    "required": [
-                                      "content"
-                                    ]
+                                    "required": ["content"]
                                   },
                                   "type": {
-                                    "enum": [
-                                      "text"
-                                    ],
+                                    "enum": ["text"],
                                     "type": "string"
                                   }
                                 },
                                 "additionalProperties": false,
-                                "required": [
-                                  "text"
-                                ]
+                                "required": ["text"]
                               },
                               "maxItems": 100
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "rich_text"
-                          ]
+                          "required": ["rich_text"]
                         },
                         "bulleted_list_item": {
                           "type": "object",
@@ -1043,50 +1022,34 @@
                                         "type": "string"
                                       },
                                       "link": {
-                                        "type": [
-                                          "object",
-                                          "null"
-                                        ],
+                                        "type": ["object", "null"],
                                         "properties": {
                                           "url": {
                                             "type": "string"
                                           }
                                         },
-                                        "required": [
-                                          "url"
-                                        ]
+                                        "required": ["url"]
                                       }
                                     },
                                     "additionalProperties": false,
-                                    "required": [
-                                      "content"
-                                    ]
+                                    "required": ["content"]
                                   },
                                   "type": {
-                                    "enum": [
-                                      "text"
-                                    ],
+                                    "enum": ["text"],
                                     "type": "string"
                                   }
                                 },
                                 "additionalProperties": false,
-                                "required": [
-                                  "text"
-                                ]
+                                "required": ["text"]
                               },
                               "maxItems": 100
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "rich_text"
-                          ]
+                          "required": ["rich_text"]
                         },
                         "type": {
-                          "enum": [
-                            "paragraph",
-                            "bulleted_list_item"
-                          ],
+                          "enum": ["paragraph", "bulleted_list_item"],
                           "type": "string"
                         }
                       },
@@ -1129,14 +1092,14 @@
         "security": []
       },
       "patch": {
-        "summary": "Update a block",
+        "summary": "Update a block in Notion based on its type. The update replaces the entire value for a given field.",
         "description": "",
         "operationId": "update-a-block",
         "parameters": [
           {
             "name": "block_id",
             "in": "path",
-            "description": "Identifier for a Notion block",
+            "description": "Identifier for a Notion block, must be a valid UUID",
             "schema": {
               "type": "string"
             },
@@ -1190,7 +1153,7 @@
     },
     "/v1/pages/{page_id}": {
       "get": {
-        "summary": "Retrieve a page",
+        "summary": "Retrieve a page. page_id is required. If you do not have the page_id, you can either run post-search to get it, or ask the user which page to create under.",
         "description": "",
         "operationId": "retrieve-a-page",
         "parameters": [
@@ -1217,14 +1180,14 @@
         "security": []
       },
       "patch": {
-        "summary": "Update page properties",
+        "summary": "Update page properties for a Notion page. page_id is required. If you do not have the page_id, you can either run post-search to get it, or ask the user which page to create under.",
         "description": "",
         "operationId": "patch-page",
         "parameters": [
           {
             "name": "page_id",
             "in": "path",
-            "description": "The identifier for the Notion page to be updated.",
+            "description": "The identifier for the Notion page to be updated. Must be a valid UUID",
             "schema": {
               "type": "string"
             },
@@ -1253,50 +1216,35 @@
                                   "type": "string"
                                 },
                                 "link": {
-                                  "type": [
-                                    "object",
-                                    "null"
-                                  ],
+                                  "type": ["object", "null"],
                                   "properties": {
                                     "url": {
                                       "type": "string"
                                     }
                                   },
-                                  "required": [
-                                    "url"
-                                  ]
+                                  "required": ["url"]
                                 }
                               },
                               "additionalProperties": false,
-                              "required": [
-                                "content"
-                              ]
+                              "required": ["content"]
                             },
                             "type": {
-                              "enum": [
-                                "text"
-                              ],
+                              "enum": ["text"],
                               "type": "string"
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "text"
-                          ]
+                          "required": ["text"]
                         },
                         "maxItems": 100
                       },
                       "type": {
-                        "enum": [
-                          "title"
-                        ],
+                        "enum": ["title"],
                         "type": "string"
                       }
                     },
                     "additionalProperties": false,
-                    "required": [
-                      "title"
-                    ]
+                    "required": ["title"]
                   },
                   "in_trash": {
                     "type": "boolean",
@@ -1315,9 +1263,7 @@
                       }
                     },
                     "additionalProperties": false,
-                    "required": [
-                      "emoji"
-                    ]
+                    "required": ["emoji"]
                   },
                   "cover": {
                     "type": "object",
@@ -1331,20 +1277,14 @@
                           }
                         },
                         "additionalProperties": false,
-                        "required": [
-                          "url"
-                        ]
+                        "required": ["url"]
                       },
                       "type": {
-                        "enum": [
-                          "external"
-                        ],
+                        "enum": ["external"],
                         "type": "string"
                       }
                     },
-                    "required": [
-                      "external"
-                    ],
+                    "required": ["external"],
                     "additionalProperties": false
                   }
                 }
@@ -1359,7 +1299,7 @@
     },
     "/v1/pages": {
       "post": {
-        "summary": "Create a page",
+        "summary": "Create a page. Parent page ID is required. If you do not have a parent page ID, you can either run post-search to get a parent page ID, or ask the user which page to create under.",
         "description": "",
         "operationId": "post-page",
         "parameters": [],
@@ -1368,10 +1308,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "parent",
-                  "properties"
-                ],
+                "required": ["parent", "properties"],
                 "properties": {
                   "parent": {
                     "type": "object",
@@ -1381,9 +1318,7 @@
                         "format": "uuid"
                       }
                     },
-                    "required": [
-                      "page_id"
-                    ]
+                    "required": ["page_id"]
                   },
                   "properties": {
                     "type": "object",
@@ -1392,15 +1327,11 @@
                         "type": "array",
                         "items": {
                           "type": "object",
-                          "required": [
-                            "text"
-                          ],
+                          "required": ["text"],
                           "properties": {
                             "text": {
                               "type": "object",
-                              "required": [
-                                "content"
-                              ],
+                              "required": ["content"],
                               "properties": {
                                 "content": {
                                   "type": "string"
@@ -1412,16 +1343,12 @@
                         "maxItems": 100
                       },
                       "type": {
-                        "enum": [
-                          "title"
-                        ],
+                        "enum": ["title"],
                         "type": "string"
                       }
                     },
                     "additionalProperties": false,
-                    "required": [
-                      "title"
-                    ]
+                    "required": ["title"]
                   },
                   "children": {
                     "type": "array",
@@ -1461,18 +1388,13 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "parent",
-                  "properties"
-                ],
+                "required": ["parent", "properties"],
                 "properties": {
                   "parent": {
                     "type": "object",
                     "properties": {
                       "type": {
-                        "enum": [
-                          "page_id"
-                        ],
+                        "enum": ["page_id"],
                         "type": "string"
                       },
                       "page_id": {
@@ -1480,10 +1402,7 @@
                         "format": "uuid"
                       }
                     },
-                    "required": [
-                      "type",
-                      "page_id"
-                    ]
+                    "required": ["type", "page_id"]
                   },
                   "properties": {
                     "type": "object",
@@ -1505,9 +1424,7 @@
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "title"
-                          ]
+                          "required": ["title"]
                         }
                       ]
                     }
@@ -1516,9 +1433,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "text"
-                      ],
+                      "required": ["text"],
                       "properties": {
                         "text": {
                           "type": "object",
@@ -1527,29 +1442,20 @@
                               "type": "string"
                             },
                             "link": {
-                              "type": [
-                                "object",
-                                "null"
-                              ],
+                              "type": ["object", "null"],
                               "properties": {
                                 "url": {
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "url"
-                              ]
+                              "required": ["url"]
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "content"
-                          ]
+                          "required": ["content"]
                         },
                         "type": {
-                          "enum": [
-                            "text"
-                          ],
+                          "enum": ["text"],
                           "type": "string"
                         }
                       },
@@ -1607,9 +1513,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "text"
-                      ],
+                      "required": ["text"],
                       "properties": {
                         "text": {
                           "type": "object",
@@ -1618,29 +1522,20 @@
                               "type": "string"
                             },
                             "link": {
-                              "type": [
-                                "object",
-                                "null"
-                              ],
+                              "type": ["object", "null"],
                               "properties": {
                                 "url": {
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "url"
-                              ]
+                              "required": ["url"]
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "content"
-                          ]
+                          "required": ["content"]
                         },
                         "type": {
-                          "enum": [
-                            "text"
-                          ],
+                          "enum": ["text"],
                           "type": "string"
                         }
                       },
@@ -1651,9 +1546,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "text"
-                      ],
+                      "required": ["text"],
                       "properties": {
                         "text": {
                           "type": "object",
@@ -1662,29 +1555,20 @@
                               "type": "string"
                             },
                             "link": {
-                              "type": [
-                                "object",
-                                "null"
-                              ],
+                              "type": ["object", "null"],
                               "properties": {
                                 "url": {
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "url"
-                              ]
+                              "required": ["url"]
                             }
                           },
                           "additionalProperties": false,
-                          "required": [
-                            "content"
-                          ]
+                          "required": ["content"]
                         },
                         "type": {
-                          "enum": [
-                            "text"
-                          ],
+                          "enum": ["text"],
                           "type": "string"
                         }
                       },
@@ -1781,7 +1665,7 @@
           {
             "name": "start_cursor",
             "in": "query",
-            "description": "For paginated properties.",
+            "description": "For paginated properties. Must be a valid UUID. If not know, skip and DO NOT include it.",
             "schema": {
               "type": "string"
             }
@@ -1829,7 +1713,7 @@
           {
             "name": "start_cursor",
             "in": "query",
-            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.",
+            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results. Must be a valid UUID. If not know, skip and DO NOT include it.",
             "schema": {
               "type": "string"
             }
@@ -1862,7 +1746,7 @@
         "security": []
       },
       "post": {
-        "summary": "Create comment",
+        "summary": "Create, insert, write a comment in Notion. The parent can be a page or a discussion_id, but not both.",
         "description": "Creates a comment in a page or existing discussion thread.",
         "operationId": "create-a-comment",
         "requestBody": {
@@ -1870,37 +1754,32 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "parent",
-                  "rich_text"
-                ],
+                "required": ["parent", "rich_text"],
                 "properties": {
                   "parent": {
                     "type": "object",
                     "description": "The page that contains the comment",
-                    "required": [
-                      "page_id"
-                    ],
+                    "required": ["page_id"],
                     "properties": {
                       "page_id": {
                         "type": "string",
-                        "description": "the page ID"
+                        "description": "the page ID, must be a valid UUID"
                       }
                     }
+                  },
+                  "discussion_id": {
+                    "type": "string",
+                    "description": "The ID of an existing discussion thread to add a comment to. Must be a valid UUID."
                   },
                   "rich_text": {
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "text"
-                      ],
+                      "required": ["text"],
                       "properties": {
                         "text": {
                           "type": "object",
-                          "required": [
-                            "content"
-                          ],
+                          "required": ["content"],
                           "properties": {
                             "content": {
                               "type": "string",
